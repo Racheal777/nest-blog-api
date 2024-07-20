@@ -8,8 +8,10 @@ import {
   Delete,
   Query,
   ValidationPipe,
+  Ip,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
+import { MyLoggerService } from 'src/my-logger/my-logger.service';
 
 import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -20,6 +22,7 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 @Controller('employees')
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
+  private readonly logger = new MyLoggerService(EmployeesController.name);
 
   @Post()
   create(@Body(ValidationPipe) createEmployeeDto: CreateEmployeeDto) {
@@ -28,7 +31,11 @@ export class EmployeesController {
 
   @SkipThrottle({ default: false })
   @Get()
-  findAll(@Query('role') role?: 'INTERN' | 'ENGINEER' | 'ADMIN') {
+  findAll(
+    @Ip() ip: string,
+    @Query('role') role?: 'INTERN' | 'ENGINEER' | 'ADMIN',
+  ) {
+    this.logger.log(`Request for All Employees ${ip}`);
     return this.employeesService.findAll(role);
   }
 
