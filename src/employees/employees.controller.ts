@@ -10,7 +10,7 @@ import {
   ValidationPipe,
   Ip,
 } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { EmployeesService } from './employees.service';
 import { MyLoggerService } from 'src/my-logger/my-logger.service';
 
