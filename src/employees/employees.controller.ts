@@ -10,6 +10,7 @@ import {
   ValidationPipe,
   Ip,
 } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { EmployeesService } from './employees.service';
 import { MyLoggerService } from 'src/my-logger/my-logger.service';
 
@@ -18,6 +19,7 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 //skiping rate limiting
+@ApiTags('employees')
 @SkipThrottle()
 @Controller('employees')
 export class EmployeesController {
